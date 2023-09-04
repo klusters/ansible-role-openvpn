@@ -10,11 +10,13 @@ dh /etc/openvpn/server/dh.pem
 topology subnet
 server 10.8.0.0 255.255.255.0
 ifconfig-pool-persist ipp.txt
-push "redirect-gateway def1 bypass-dhcp"
-push "dhcp-option DNS 1.1.1.1"
-push "dhcp-option DNS 1.0.0.1"
+{% for dns in openvpn_dns %}
+push "dhcp-option DNS {{ dns }}"
+{% endfor %}
+{% for network in openvpn_networks %}
+push "route {{ network | ansible.utils.ipaddr('network') }} {{ network | ansible.utils.ipaddr('netmask') }}"
+{% endfor %}
 keepalive 10 120
-# tls-crypt /etc/openvpn/server/myvpn.tlsauth 0
 cipher AES-256-CBC
 user nobody
 group {{ openvpn_group }}
