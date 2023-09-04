@@ -88,3 +88,22 @@
     mode: "0640"
   notify:
     - Restart openvpn
+
+- name: server | Install iptables-persistent
+  ansible.builtin.package:
+    name: iptables-persistent
+    state: present
+
+- name: server | Place iptables NAT rules
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    jump: MASQUERADE
+    source: 10.8.0.0/24
+    out_interface: ens4
+
+- name: server | Enable IP forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    state: present
