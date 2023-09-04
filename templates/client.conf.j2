@@ -20,4 +20,6 @@ verb 3
 ca /etc/openvpn/client/ca.crt
 cert /etc/openvpn/client/client.crt
 key /etc/openvpn/client/client.key
-auth SHA512
+auth SHA1
+cipher AES-256-CBC
+keysize 256
