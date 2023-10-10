@@ -36,9 +36,9 @@
 
 - name: server | Easyrsa build-client-full client nopass
   ansible.builtin.command:
-    cmd: "{{ openvpn_easyrsa_path }}/easyrsa build-client-full client nopass"
+    cmd: "{{ openvpn_easyrsa_path }}/easyrsa build-client-full {{ vpn_user }} nopass"
     chdir: /etc/openvpn/easy-rsa
-    creates: /etc/openvpn/easy-rsa/pki/issued/client.crt
+    creates: "/etc/openvpn/easy-rsa/pki/issued/{{ vpn_user }}.crt"
   environment:
     EASYRSA_BATCH: "yes"
 
@@ -63,10 +63,10 @@
     - ca.crt
     - dh.pem
     - ta.key
-    - issued/client.crt
+    - "issued/{{ vpn_user }}.crt"
     - issued/server.crt
     - private/ca.key
-    - private/client.key
+    - "private/{{ vpn_user }}.key"
     - private/server.key
 
 - name: server | Copy files to /etc/openvpn

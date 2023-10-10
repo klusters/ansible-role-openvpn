@@ -16,8 +16,8 @@ key-direction 1
 comp-lzo
 verb 3
 ca /etc/openvpn/client/ca.crt
-cert /etc/openvpn/client/client.crt
-key /etc/openvpn/client/client.key
+cert /etc/openvpn/client/{{ vpn_user }}.crt
+key /etc/openvpn/client/{{ vpn_user }}.key
 auth SHA1
 cipher AES-256-CBC
 keysize 256
