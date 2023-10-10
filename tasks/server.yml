@@ -36,9 +36,9 @@
 
 - name: server | Easyrsa build-client-full client nopass
   ansible.builtin.command:
-    cmd: "{{ openvpn_easyrsa_path }}/easyrsa build-client-full client nopass"
+    cmd: "{{ openvpn_easyrsa_path }}/easyrsa build-client-full {{ vpn_user }} nopass"
     chdir: /etc/openvpn/easy-rsa
-    creates: /etc/openvpn/easy-rsa/pki/issued/client.crt
+    creates: "/etc/openvpn/easy-rsa/pki/issued/{{ vpn_user }}.crt"
   environment:
     EASYRSA_BATCH: "yes"
 
@@ -63,10 +63,10 @@
     - ca.crt
     - dh.pem
     - ta.key
-    - issued/client.crt
+    - "issued/{{ vpn_user }}.crt"
     - issued/server.crt
     - private/ca.key
-    - private/client.key
+    - "private/{{ vpn_user }}.key"
     - private/server.key
 
 - name: server | Copy files to /etc/openvpn
@@ -88,3 +88,22 @@
     mode: "0640"
   notify:
     - Restart openvpn
+
+- name: server | Install iptables-persistent
+  ansible.builtin.package:
+    name: iptables-persistent
+    state: present
+
+- name: server | Place iptables NAT rules
+  ansible.builtin.iptables:
+    table: nat
+    chain: POSTROUTING
+    jump: MASQUERADE
+    source: 10.8.0.0/24
+    out_interface: ens4
+
+- name: server | Enable IP forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    state: present

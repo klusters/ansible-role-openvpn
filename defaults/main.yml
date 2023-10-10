@@ -9,3 +9,11 @@ openvpn_role: server
 # If you are configuring a client, setup these variables:
 # openvpn_role: client
 # openvpn_client_server: vpn.example.com
+
+openvpn_dns:
+  - 1.1.1.1
+  - 1.0.0.1
+
+openvpn_networks:
+  - 10.0.20.0/24
+  - 10.0.21.0/24
