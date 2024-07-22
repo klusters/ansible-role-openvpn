@@ -44,6 +44,7 @@ _openvpn_service:
     Ubuntu: openvpn
   client:
     default: openvpn@client
+    Archlinux: openvpn-client@client
     RedHat-7: openvpn@client
     RedHat: openvpn-client@client
     Ubuntu: openvpn
