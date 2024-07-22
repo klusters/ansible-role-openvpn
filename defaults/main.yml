@@ -22,3 +22,4 @@ openvpn_protocol: udp
 openvpn_port: 1194
 
 openvpn_logfile: ''
+openvpn_server_subnet: '10.8.0.0/24'

@@ -8,7 +8,7 @@ cert /etc/openvpn/server/server.crt
 key /etc/openvpn/server/server.key
 dh /etc/openvpn/server/dh.pem
 topology subnet
-server 10.8.0.0 255.255.255.0
+server {{ openvpn_server_subnet | ansible.utils.ipaddr('network') }} {{ openvpn_server_subnet | ansible.utils.ipaddr('netmask') }}
 ifconfig-pool-persist ipp.txt
 {% for dns in openvpn_dns %}
 push "dhcp-option DNS {{ dns }}"
