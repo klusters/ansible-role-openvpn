@@ -23,6 +23,9 @@ group {{ openvpn_group }}
 persist-key
 persist-tun
 status openvpn-status.log
+{% if openvpn_logfile != ''%}
+log {{ openvpn_logfile }}
+{% endif %}
 verb 3
 explicit-exit-notify 1
 remote-cert-eku "TLS Web Client Authentication"

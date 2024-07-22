@@ -17,3 +17,4 @@ openvpn_dns:
 openvpn_networks:
   - 10.0.20.0/24
   - 10.0.21.0/24
+openvpn_logfile: ''
