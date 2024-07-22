@@ -4,7 +4,7 @@
   ansible.builtin.file:
     path: /etc/openvpn/client
     state: directory
-    owner: root
+    owner: openvpn
     group: "{{ openvpn_group }}"
     mode: "0750"
 
@@ -12,7 +12,7 @@
   ansible.builtin.template:
     src: client.conf.j2
     dest: "{{ openvpn_configuration_directory }}/client.conf"
-    owner: root
+    owner: openvpn
     group: "{{ openvpn_group }}"
     mode: "0640"
   notify:
