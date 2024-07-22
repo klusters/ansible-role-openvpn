@@ -1,7 +1,7 @@
 {{ ansible_managed | comment }}
 
-port 1194
-proto udp
+port {{ openvpn_port }}
+proto {{ openvpn_protocol }}
 dev tun
 ca /etc/openvpn/server/ca.crt
 cert /etc/openvpn/server/server.crt
@@ -27,7 +27,9 @@ status openvpn-status.log
 log {{ openvpn_logfile }}
 {% endif %}
 verb 3
+{% if openvpn_protocol == 'udp'%}
 explicit-exit-notify 1
+{% endif %}
 remote-cert-eku "TLS Web Client Authentication"
 comp-lzo
 keysize 256

@@ -17,4 +17,8 @@ openvpn_dns:
 openvpn_networks:
   - 10.0.20.0/24
   - 10.0.21.0/24
+
+openvpn_protocol: udp
+openvpn_port: 1194
+
 openvpn_logfile: ''
